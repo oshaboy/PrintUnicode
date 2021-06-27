@@ -6,14 +6,11 @@ figure=" "
 regular=" "
 em = " "
 en = " "
-def algebraicBool(bool):
-	if bool:
-		return 1
-	return 0
+
 def distribute_error(imgdump, x, y, w, h):
 	global threshhold_global
 	pixel = imgdump[x,y]
-	error=pixel-threshhold_global*algebraicBool(pixel>=threshhold_global)
+	error=pixel-threshhold_global*(pixel>=threshhold_global)
 	if x!=w-1:
 		imgdump[x+1,y] += math.floor((7/16)*error)
 	if y!=h-1 and x!=w-1:

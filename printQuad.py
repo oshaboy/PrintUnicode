@@ -7,14 +7,11 @@ regular=" "
 em = " "
 en = " "
 blocks = [" ", "▘", "▝", "▀", "▖","▍", "▞", "▛", "▗", "▚", "▐", "▜", "▄", "▙", "▜", "█"]
-def algebraicBool(bool):
-	if bool:
-		return 1
-	return 0
+
 def distribute_error(imgdump, x, y, w, h):
 	global threshhold_global
 	pixel = imgdump[x,y]
-	error=pixel-threshhold_global*algebraicBool(pixel>=threshhold_global)
+	error=pixel-threshhold_global*(pixel>=threshhold_global)
 	if x!=w-1:
 		imgdump[x+1,y] += math.floor((7/16)*error)
 	if y!=h-1:
@@ -33,24 +30,24 @@ def image_2_quad(filename, output="", dither=True, inverse = False, space=""):
 	for y in range(0, image.height, 2):
 		string = ""
 		for x in range(0, image.width, 2):
-			charnum = algebraicBool(inverse) * 15
+			charnum = inverse * 15
 			if imgdump[(x,y)] >= threshhold_global:
-				charnum+=1 * (algebraicBool(not inverse) - algebraicBool(inverse))
+				charnum+=1 * ((not inverse) - inverse)
 			if dither:
 				distribute_error(imgdump, x, y, image.width, image.height)
 			if x+1 != image.width:
 				if imgdump[(x+1,y)] >= threshhold_global:
-					charnum+=2 * (algebraicBool(not inverse) - algebraicBool(inverse))
+					charnum+=2 * ((not inverse) - inverse)
 				if dither:
 					distribute_error(imgdump, x+1, y, image.width, image.height)
 			if y+1 != image.height:
 				if imgdump[(x,y+1)] >= threshhold_global:
-					charnum += 4 * (algebraicBool(not inverse) - algebraicBool(inverse))
+					charnum += 4 * ((not inverse) - inverse)
 				if dither:
 					distribute_error(imgdump, x, y+1, image.width, image.height)
 			if x+1 != image.width and y+1 != image.height:
 				if imgdump[(x+1,y+1)] >= threshhold_global:
-					charnum+=8 * (algebraicBool(not inverse) - algebraicBool(inverse))
+					charnum+=8 * ((not inverse) - inverse)
 				if dither:
 					distribute_error(imgdump, x+1, y+1, image.width, image.height)
 			string += blocks[charnum]

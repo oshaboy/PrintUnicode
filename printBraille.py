@@ -2,10 +2,7 @@
 
 from PIL import Image
 import math,sys	
-def algebraicBool(bool):
-	if bool:
-		return 1
-	return 0
+
 def threshhold_func(pix):
 	global threshhold_global
 	if pix>=threshhold_global:
@@ -14,7 +11,7 @@ def threshhold_func(pix):
 def distribute_error(imgdump, x, y, w, h):
 	global threshhold_global
 	pixel = imgdump[x,y]
-	error=pixel-threshhold_global*algebraicBool(pixel>=threshhold_global)
+	error=pixel-threshhold_global*(pixel>=threshhold_global)
 	if x!=w-1:
 		imgdump[x+1,y] += math.floor((7/16)*error)
 	if y!=h-1:
@@ -27,47 +24,47 @@ def image_2_braille(filename, output="", dither=True, inverse = False, braille_s
 	imgdump = image.load()
 	if output != "":
 		output_file = open(output,"wb")
-	for y in range(0, image.height, 3+algebraicBool(not braille_subset)):
+	for y in range(0, image.height, 3+(not braille_subset)):
 		string = ""
 		for x in range(0, image.width, 2):
-			charnum = algebraicBool(inverse) * (255 * algebraicBool(not braille_subset) + 64 * algebraicBool(braille_subset))
+			charnum = (inverse) * (255 * (not braille_subset) + 64 * braille_subset)
 			if imgdump[(x,y)] == 0:
-				charnum+=1 * (algebraicBool(not inverse) - algebraicBool(inverse))
+				charnum+=1 * ((not inverse) - (inverse))
 			if dither:
 				distribute_error(imgdump, x, y, image.width, image.height)
 			if x+1 != image.width:
 				if imgdump[(x+1,y)] >= threshhold_global:
-					charnum+=8 * (algebraicBool(not inverse) - algebraicBool(inverse))
+					charnum+=8 * ((not inverse) - inverse)
 				if dither:
 					distribute_error(imgdump, x, y, image.width, image.height)
 			if y+1 < image.height:
 				if imgdump[(x,y+1)] >= threshhold_global:
-					charnum+=2 * (algebraicBool(not inverse) - algebraicBool(inverse))
+					charnum+=2 * ((not inverse) - inverse)
 				if dither:
 					distribute_error(imgdump, x, y+1, image.width, image.height)
 			if x+1 != image.width and y+1 < image.height:
 				if imgdump[(x+1,y+1)] >= threshhold_global:
-					charnum+=16 * (algebraicBool(not inverse) - algebraicBool(inverse))
+					charnum+=16 * ((not inverse) - inverse)
 				if dither:
 					distribute_error(imgdump, x+1, y+1, image.width, image.height)
 			if y+2 < image.height:
 				if imgdump[(x,y+2)] >= threshhold_global:
-					charnum+=4 * (algebraicBool(not inverse) - algebraicBool(inverse))
+					charnum+=4 * ((not inverse) - inverse)
 				if dither:
 					distribute_error(imgdump, x, y+2, image.width, image.height)
 			if x+1 != image.width and y+2 < image.height:
 				if imgdump[(x+1,y+2)] >= threshhold_global:
-					charnum+=32 * (algebraicBool(not inverse) - algebraicBool(inverse))
+					charnum+=32 * ((not inverse) - inverse)
 				if dither:
 					distribute_error(imgdump, x+1, y+2, image.width, image.height)
 			if not braille_subset and y+3 < image.height: 
 				if imgdump[(x,y+3)] >= threshhold_global:
-					charnum+=64 * (algebraicBool(not inverse) - algebraicBool(inverse))
+					charnum+=64 * ((not inverse) - inverse)
 				if dither:
 					distribute_error(imgdump, x, y+3, image.width, image.height)
 			if not braille_subset and x+1 != image.width and y+3 < image.height:
 				if imgdump[(x+1,y+3)] >= threshhold_global:
-					charnum+=128 * (algebraicBool(not inverse) - algebraicBool(inverse))
+					charnum+=128 * ((not inverse) - inverse)
 				if dither:
 					distribute_error(imgdump, x, y+3, image.width, image.height)
 			string += chr(0x2800+charnum)
