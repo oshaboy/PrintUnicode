@@ -53,7 +53,6 @@ def image_2_block(filename, char="⬤", output="", dither=True, inverse = False,
 	if output != "":
 		output_file.close()
 
-#main("D:\\Noam10\\Documents\\Desktop\\Parapluie\\__sonic_team_anime_style___by_tamber_mizuki-d4ae8z1.png", output="D:\\Noam10\\Documents\\Desktop\\Parapluie\\sonic3.txt", dither=True, inverse=False, pixelWidth = 1)
 help_text="""
 Usage: printWhatev.py image [-h] [-d] [-t #n] [-i] [-w] [-c char]
 	
