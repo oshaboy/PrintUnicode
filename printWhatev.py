@@ -20,7 +20,7 @@ def distribute_error(imgdump, x, y, w, h):
 	if x!=0 and y!=h-1:
 		imgdump[x-1,y+1] += math.floor((3/16)*error)
 	return error
-def image_2_block(filename, char="⬤", output="", dither=True, inverse = False, double_flag = False, space = " "):
+def image_2_whatev(filename, char="⬤", output="", dither=True, inverse = False, double_flag = False, space = " "):
 	global threshhold_global
 	if double_flag:
 		pixelWidth=2
@@ -104,4 +104,4 @@ if __name__ == "__main__":
 		out_file=sys.argv[2]
 	else:
 		out_file=""
-	image_2_block(in_file,char=custom_char, output="", dither=dither_flag, inverse=invert_flag, double_flag = pixel_width_flag)
+	image_2_whatev(in_file,char=custom_char, output="", dither=dither_flag, inverse=invert_flag, double_flag = pixel_width_flag)
