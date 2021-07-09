@@ -112,7 +112,7 @@ def image_2_block_ansi(filename, output="", dither=True, double_flag = False):
 		output_file.close()
 
 help_text="""
-Usage: printBlock.py image [-h] [-d] [-s] [-i] [-w] [-t #n]
+Usage: printBlockAnsi.py image [-h] [-d] [-s] [-i] [-w] [-t #n]
 	
 	-h: Print this
 	-d: Disable Dithering

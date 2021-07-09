@@ -107,7 +107,7 @@ def image_2_whatev_ansi(filename, char="⬤", output="", dither=True, double_fla
 		output_file.close()
 
 help_text="""
-Usage: printBlock.py image [-h] [-d [-i] [-w] [-t #n] [-c char]
+Usage: printWhatevAnsi.py image [-h] [-d [-i] [-w] [-t #n] [-c char]
 	
 	-h: Print this
 	-d: Disable Dithering

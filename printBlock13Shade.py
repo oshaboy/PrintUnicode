@@ -56,7 +56,7 @@ def image_2_block(filename, output="", dither=True, double_flag = False, space =
 		output_file.close()
 
 help_text="""
-Usage: printBlock.py image [-h] [-d] [-w] 
+Usage: printBlock13Shade.py image [-h] [-d] [-w] 
 	
 	-h: Print this
 	-d: Disable Dithering
