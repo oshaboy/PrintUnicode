@@ -28,7 +28,7 @@ def image_2_braille(filename, output="", dither=True, inverse = False, braille_s
 		string = ""
 		for x in range(0, image.width, 2):
 			charnum = (inverse) * (255 * (not braille_subset) + 64 * braille_subset)
-			if imgdump[(x,y)] == 0:
+			if imgdump[(x,y)] >= threshhold_global:
 				charnum+=1 * ((not inverse) - (inverse))
 			if dither:
 				distribute_error(imgdump, x, y, image.width, image.height)
