@@ -57,7 +57,7 @@ def weighted_average(fullpixel):
 		count=3
 	return pixsum//count
 threshhold_global=127
-def image_2_block_ansi(filename, output="", dither=True, inverse = False, double_flag = False, scale_select=0, threshhold=127):
+def image_2_block_ansi(filename, output="", dither=True, double_flag = False, scale_select=0):
 	global threshhold_global
 	if double_flag:
 		pixelWidth=2
@@ -139,7 +139,6 @@ if __name__ == "__main__":
 		sys.exit(1)
 	in_file=sys.argv[1]
 	dither_flag=True
-	invert_flag=False
 	pixel_width_flag=False
 	scale_select=0
 	while (argc>2 and sys.argv[2][0]=="-"):
@@ -168,4 +167,4 @@ if __name__ == "__main__":
 		out_file=sys.argv[2]
 	else:
 		out_file=""
-	image_2_block_ansi(in_file, output="", dither=dither_flag, inverse=invert_flag, double_flag = pixel_width_flag)
+	image_2_block_ansi(in_file, output="", dither=dither_flag, scale_select=scale_select, double_flag = pixel_width_flag)
