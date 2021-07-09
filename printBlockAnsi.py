@@ -6,8 +6,7 @@ figure=" "
 regular=" "
 em = " "
 en = " "
-scales=[
-	[
+scale=[
 		"\x1b[30m█",
 		"\x1b[3{}m░",
 		"\x1b[9{}m░",
@@ -16,19 +15,9 @@ scales=[
 		"\x1b[3{}m▓",
 		"\x1b[9{}m▓",
 		"\x1b[3{}m█",
-		"\x1b[9{}m█"
-	],[
-		"\x1b[30m█",
-		"\x1b[3{}m░",
-		"\x1b[3{}m▒",
-		"\x1b[3{}m▓",
-		"\x1b[3{}m█",
-		"\x1b[9{}m░",
-		"\x1b[9{}m▒",
-		"\x1b[9{}m▓",
 		"\x1b[9{}m█"
 	]
-]
+
 def hue_raw(fullpixel):
 	global threshhold_global
 	hue_arr = [False,False,False]
@@ -57,7 +46,7 @@ def weighted_average(fullpixel):
 		count=3
 	return pixsum//count
 threshhold_global=127
-def image_2_block_ansi(filename, output="", dither=True, double_flag = False, scale_select=0):
+def image_2_block_ansi(filename, output="", dither=True, double_flag = False):
 	global threshhold_global
 	if double_flag:
 		pixelWidth=2
@@ -79,7 +68,7 @@ def image_2_block_ansi(filename, output="", dither=True, double_flag = False, sc
 			hue_arr=hue_raw(pixel)
 			color=hue(pixel)
 			brightness=weighted_average(pixel) // 29
-			string += scales[scale_select][brightness].format(color) * pixelWidth
+			string += scale[brightness].format(color) * pixelWidth
 			if dither:
 				new_pixel=[].extend(pixel)
 				pixels_i_care_about=[None,None,None,None]
@@ -127,7 +116,6 @@ Usage: printBlock.py image [-h] [-d] [-s] [-i] [-w] [-t #n]
 	
 	-h: Print this
 	-d: Disable Dithering
-    -s: select alternate scale (works better on some terminals)
     -w: print every character twice
 	-t: use threshhold for hue selection
 """
@@ -139,7 +127,6 @@ if __name__ == "__main__":
 	in_file=sys.argv[1]
 	dither_flag=True
 	pixel_width_flag=False
-	scale_select=0
 	while (argc>2 and sys.argv[2][0]=="-"):
 		if sys.argv[2]=="-h":
 			print(help_text)
@@ -149,8 +136,7 @@ if __name__ == "__main__":
 		elif sys.argv[2]=="-w":
 			
 			pixel_width_flag=True
-		elif sys.argv[2]=="-s":
-			scale_select=1
+
 		elif sys.argv[2]=="-t":
 			if argc>3 and sys.argv[3].isnumeric() and int(sys.argv[3])>=0:
 				threshhold_global=int(sys.argv[3])
@@ -166,4 +152,4 @@ if __name__ == "__main__":
 		out_file=sys.argv[2]
 	else:
 		out_file=""
-	image_2_block_ansi(in_file, output="", dither=dither_flag, scale_select=scale_select, double_flag = pixel_width_flag)
+	image_2_block_ansi(in_file, output="", dither=dither_flag, double_flag = pixel_width_flag)
