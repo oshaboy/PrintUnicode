@@ -1,1 +1,7 @@
 *.png
+*.jpg
+*.ppm
+*.pbm
+*.pgm
+*.txt
+*.ansi
